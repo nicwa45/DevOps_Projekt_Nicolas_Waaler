@@ -1,12 +1,12 @@
 name: Code Verification and Tests
 
-#trigger(when it will run)
+#Trigger the workflow
 on:
   push:
-    branches: [ "main" ]  #Trigger on push to the main branch
+    branches: [ "main" ]  # Trigger on push to the main branch
   pull_request:
-    branches: [ "main" ]  #Trigger on pull requests to the main branch
-  workflow_dispatch:      #Allow manual trigger(in actions tab)
+    branches: [ "main" ]  # Trigger on pull requests to the main branch
+  workflow_dispatch:      # Allow manual trigger (in the Actions tab)
 
 #Define the jobs in this workflow
 jobs:
@@ -15,29 +15,31 @@ jobs:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
     steps:
-      #1: Checkout repository code
+      #1 Checkout repository code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      #2: Set up Python environment
+      #2 Set up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.12  # Specify your project's Python version
 
-      #3: Install dependencies
+      #3 Install dependencies
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r app/requirements.txt
-
-      #4: Lint code
+          pip install -r appweb/requirements.txt
+          
+      #4 Lint code
       - name: Run Linter
         run: |
           pip install flake8
           flake8 .
 
-      #5: Run tests
+      #5 Run tests with API key from GitHub Secrets
       - name: Run Tests
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
           pytest --maxfail=5 --disable-warnings
