@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dota 2 Visualizations</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Dota 2 Data Visualizations</h1>
+    <h2>Showing data from the last 1000 games</h2>
+    <!-- Radiant vs Dire Winrate -->
+    <h2>Radiant vs Dire Winrate</h2>
+    <canvas id="winrateChart" width="200" height="200"></canvas>
+    <script>
+        const winrateCtx = document.getElementById('winrateChart').getContext('2d');
+        new Chart(winrateCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Radiant', 'Dire'],
+                datasets: [{
+                    label: 'Winrate (%)',
+                    data: [{{ radiant }}, {{ dire }}],
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+
+    <!-- Match Duration Distribution -->
+    <h2>Match Duration Distribution</h2>
+    <canvas id="durationChart" width="400" height="200"></canvas>
+    <script>
+        const durationCtx = document.getElementById('durationChart').getContext('2d');
+        new Chart(durationCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys({{ duration_distribution | tojson }}),
+                datasets: [{
+                    label: 'Number of Matches',
+                    data: Object.values({{ duration_distribution | tojson }}),
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+
+    <!-- Games Played per Game Mode -->
+    <h2>Games Played per Game Mode</h2>
+    <canvas id="gameModeChart" width="400" height="200"></canvas>
+    <script>
+        const gameModeCtx = document.getElementById('gameModeChart').getContext('2d');
+        new Chart(gameModeCtx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys({{ game_mode_distribution | tojson }}),
+                datasets: [{
+                    data: Object.values({{ game_mode_distribution | tojson }}),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth:1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+</body>
+</html>
