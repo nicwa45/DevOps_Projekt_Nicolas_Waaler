@@ -15,5 +15,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8080
 
 # Run the application, resolving the PORT variable at runtime
-CMD ["python", "-m", "waitress", "--port=${PORT}", "appweb.apprun:app"]
+CMD ["python", "-m", "waitress", "--port", "8080", "appweb.apprun:app"]
 
