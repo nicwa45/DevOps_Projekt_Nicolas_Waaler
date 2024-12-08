@@ -9,9 +9,19 @@ API_BASE_URL = "https://api.opendota.com/api"
 API_KEY = os.getenv("API_KEY")
 
 GAME_MODE_NAMES = {
+    1: "All Pick",
+    2: "Captains Mode",
     3: "Random Draft",
     4: "Single Draft",
+    5: "All Random",
+    11: "Mid Only",
+    12: "Least Played",
+    16: "Captains Draft",
+    18: "Ability Draft",
+    20: "All Random Deathmatch",
+    21: "1v1 Mid",
     22: "All Pick Ranked",
+    23: "Turbo",
 }
 
 app = Flask(__name__)
