@@ -11,8 +11,9 @@ COPY requirements.txt /app/
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port 8080 to the outside world (using environment variable for flexibility)
-EXPOSE ${PORT:-8080}
+# Expose the port (optional for documentation)
+EXPOSE 8080
 
-# Command to run the application using Waitress
-CMD ["python", "-m", "waitress", "--port=${PORT:-8080}", "appweb.apprun:app"]
+# Run the application, resolving the PORT variable at runtime
+CMD ["python", "-m", "waitress", "--port=${PORT}", "appweb.apprun:app"]
+
