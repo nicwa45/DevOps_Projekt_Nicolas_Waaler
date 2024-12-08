@@ -2,7 +2,6 @@ from flask import Flask, render_template
 import requests
 from collections import Counter
 import os
-from waitress import serve
 
 API_BASE_URL = "https://api.opendota.com/api"
 
@@ -93,5 +92,5 @@ def index():
 
 
 if __name__ == "__main__":
-    serve(app, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
 
